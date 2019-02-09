@@ -28,9 +28,7 @@ These lists all append together
   )
 )
 
-#|
-TEST CASES
-|#
+;TEST CASES
 (display (reverse-general '() ))
 (display "\n")
 (display (reverse-general '(a b c) ))
@@ -45,8 +43,6 @@ TEST CASES
 (display "\n")
 (display (reverse-general '(1 (2 3) (4 (a (b (c d)))))))
 (display "\n")
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -87,4 +83,68 @@ conditions:
 (display (sum-up-numbers-simple '(100 (200)) ))
 (display "\n")
 (display (sum-up-numbers-simple '(a 100 b (200) c 300 d) ))
+(display "\n")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;QUESTION 3
+
+;guile 2.0.11
+
+#|
+conditions: 
+1st - checks whether the list is empty, if so --> returns 0
+2nd - checks whether the current first element is a number, if so --> returns first element + function call excluding the first element
+3rd - checks if the current first element is a list, if so --> recursively goes inside the nested list
+4th - if the current first element is not a number or a list, just skips that element
+|#
+
+(define (sum-up-numbers-general L)
+  (cond ((null? L) 0)
+        ((number? (car L)) (+ (car L) (sum-up-numbers-general (cdr L))))
+        ((list? (car L)) (+ (sum-up-numbers-general (car L)) (sum-up-numbers-general (cdr L))))
+        ( (sum-up-numbers-general (cdr L)) )
+  )
+)
+
+;TEST CASES
+(display "expected result: 0 \t Result: ")
+(display (sum-up-numbers-general '() ))
+(display (if (= 0 (sum-up-numbers-general '() )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 100 \t Result: ")
+(display (sum-up-numbers-general '(100) ))
+(display (if (= 100 (sum-up-numbers-general '(100) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 300 \t Result: ")
+(display (sum-up-numbers-general '(100 200) ))
+(display (if (= 300 (sum-up-numbers-general '(100 200) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 0 \t Result: ")
+(display (sum-up-numbers-general '(a) ))
+(display (if (= 0 (sum-up-numbers-general '(a) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 600 \t Result: ")
+(display (sum-up-numbers-general '(a 100 b 200 c 300 d) ))
+(display (if (= 600 (sum-up-numbers-general '(a 100 b 200 c 300 d) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 0 \t Result: ")
+(display (sum-up-numbers-general '(()) ))
+(display (if (= 0 (sum-up-numbers-general '(()) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 100 \t Result: ")
+(display (sum-up-numbers-general '((100)) ))
+(display (if (= 100 (sum-up-numbers-general '((100)) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 300 \t Result: ")
+(display (sum-up-numbers-general '(100 (200)) ))
+(display (if (= 300 (sum-up-numbers-general '(100 (200)) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 600 \t Result: ")
+(display (sum-up-numbers-general '(a 100 b (200) c 300 d) ))
+(display (if (= 600 (sum-up-numbers-general '(a 100 b (200) c 300 d) )) "\tPASS" "\tFAIL"))
+(display "\n")
+(display "expected result: 600 \t Result: ")
+(display (sum-up-numbers-general '(a 100 ((b ((200) c)) 300 d)) ))
+(display (if (= 600 (sum-up-numbers-general '(a 100 ((b ((200) c)) 300 d)) )) "\tPASS" "\tFAIL"))
 (display "\n")
