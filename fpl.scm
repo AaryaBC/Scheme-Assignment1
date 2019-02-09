@@ -62,7 +62,7 @@ conditions:
 |#
 (define (sum-up-numbers-simple L)
   (cond ((null? L) 0)
-        ( (number? (car L)) (+ 0 (car L) (sum-up-numbers-simple (cdr L))))
+        ( (number? (car L)) (+ (car L) (sum-up-numbers-simple (cdr L))))
         ( (sum-up-numbers-simple (cdr L)) )
   )
 )
