@@ -1,3 +1,5 @@
+;QUESTION 1
+
 ;guile 2.0.11
 ;Reverse a list
 
@@ -22,4 +24,30 @@ These lists all append together
 |#
 (define (reverse-general l)
   (map (lambda (x) (if (list? x) (reverse-general x) x)) 
-       (reverse-helper l)))
+       (reverse-helper l)
+  )
+)
+
+#|
+TEST CASES
+|#
+(display (reverse-general '() ))
+(display "\n")
+(display (reverse-general '(a b c) ))
+(display "\n")
+(display (reverse-general '(a b ()) ))
+(display "\n")
+(display (reverse-general '((a b c)) ))
+(display "\n")
+(display (reverse-general '((a b c) (d e f)) ))
+(display "\n")
+(display (reverse-general '(a (b c) ((d e) f) g) ))
+(display "\n")
+(display (reverse-general '(1 (2 3) (4 (a (b (c d)))))))
+(display "\n")
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;QUESTION 2
