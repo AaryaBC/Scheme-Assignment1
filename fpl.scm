@@ -51,3 +51,40 @@ TEST CASES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;QUESTION 2
+
+;guile 2.0.11
+
+#|
+conditions: 
+1st - checks whether the list is empty, if so --> returns 0
+2nd - checks whether the current first element is a number, if so --> returns first element + function call excluding the first element
+3rd - if not a number, returns the function without that element and carry-on
+|#
+(define (sum-up-numbers-simple L)
+  (cond ((null? L) 0)
+        ( (integer? (car L)) (+ 0 (car L) (sum-up-numbers-simple (cdr L))))
+        ( (sum-up-numbers-simple (cdr L)) )
+  )
+)
+
+;TEST CASES
+(display (sum-up-numbers-simple '() ))
+(display "\n")
+(display (sum-up-numbers-simple '(100 200) ))
+(display "\n")
+(display (sum-up-numbers-simple '(a b c) ))
+(display "\n")
+(display (sum-up-numbers-simple '(100 a) ))
+(display "\n")
+(display (sum-up-numbers-simple '(a 100) ))
+(display "\n")
+(display (sum-up-numbers-simple '(a 100 b 200 c 300 d) ))
+(display "\n")
+(display (sum-up-numbers-simple '(()) ))
+(display "\n")
+(display (sum-up-numbers-simple '((100)) ))
+(display "\n")
+(display (sum-up-numbers-simple '(100 (200)) ))
+(display "\n")
+(display (sum-up-numbers-simple '(a 100 b (200) c 300 d) ))
+(display "\n")
