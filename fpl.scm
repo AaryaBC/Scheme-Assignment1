@@ -188,6 +188,7 @@ conditions:
 
 ;guile 2.0.11
 
+;Function to extract only the numbers from a given list
 (define (extract-numbers list1)
   (cond ( (null? list1) '() )
         ( (number? (car list1)) (cons (car list1) (extract-numbers (cdr list1))) )
@@ -195,6 +196,7 @@ conditions:
   )
 )
 
+;function to get the minimum number from a list --> Used to get the min of L2 when needed
 (define (get-min given-list)
   (cond ( (null? (cdr given-list)) (car given-list) )
         ( (< (car given-list) (get-min (cdr given-list))) (car given-list) )
@@ -202,20 +204,40 @@ conditions:
   )
 )
 
-(define (get-min-2 list2 min1 min2)
-  (if (and (< min1 (car list2)) (< (car list2) min2)) (car(get-min-2 (cdr list2) min1 (car list2))))
-  (car(get-min-2 (cdr list2) min1 min2))
-)
-  
-  
-(define (min-above-min L1 L2)
-  (cond ((null? (extract-numbers L1)) #f)
-        ((null? (extract-numbers L2)) (get-min (extract-numbers L1)))
-        (get-min-2 (extract-numbers L1) (get-min (extract-numbers L2)) (car (extract-numbers L1)))
+;function to get the max of a list --> Used as starter value for the element we need to return when needed
+(define (get-max given-list)
+  (cond ( (null? (cdr given-list)) (car given-list) )
+        ( (> (car given-list) (get-max (cdr given-list))) (car given-list) )
+        ( (get-max (cdr given-list)) )
   )
 )
 
+;function to get the min from L1 which is larger than min from L2
+(define (get-min-2 list1 min1 min2)
+  (cond ((null? list1) min2)
+        ((and (< min1 (car list1)) (< (car list1) min2)) (get-min-2 (cdr list1) min1 (car list1)))
+        (else (get-min-2 (cdr list1) min1 min2))
+  )
+)
+  
 #|
+conditions: 
+1st - checks whether the list L1 doesn't have any numbers --> returns FALSE in that case
+2nd - checks if L1 contains numbers <condition fulfilled above> but L2 doesn't contain numbers, returns the minimum from L1
+3rd - if both conditions above fail, then extracts the min from L1 which is larger than min from L2
+    - checks if that minimum from L1 is less than or equal to minimum from L2 --> returns false in that case
+4th - if all above conditions are false, it means that there is an element in L1 such that it's the
+    - it's the smallest element from L1 bigger than the minimum of L2. --> Returns that element
+|#  
+(define (min-above-min L1 L2)
+  (cond ((null? (extract-numbers L1)) #f)
+        ((null? (extract-numbers L2)) (get-min (extract-numbers L1)))
+        ( (<= (get-min-2 (extract-numbers L1) (get-min (extract-numbers L2)) (get-max (extract-numbers L1))) (get-min (extract-numbers L2)) ) #f)
+        (else (get-min-2 (extract-numbers L1) (get-min (extract-numbers L2)) (get-max (extract-numbers L1))))
+  )
+)
+
+
 (display(min-above-min '() '(a 100 b 200 c 300 d)))
 (display "\n")
 (display(min-above-min '(100) '()))
@@ -236,5 +258,3 @@ conditions:
 (display "\n")
 (display(min-above-min '(a 300 b 100 c 200 d) '(a 200 b 300 c 100 d)))
 (display "\n")
-|#
-(display (get-min-2 '(100 200 300) 100 100))
