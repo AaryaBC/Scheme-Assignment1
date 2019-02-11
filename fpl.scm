@@ -237,24 +237,55 @@ conditions:
   )
 )
 
-
+;TEST CASES
+(display "QUESTION 4: Min Above Min \n")
+(display "---------------------------------------\n")
+(display "expected result: #f \t Result: ")
 (display(min-above-min '() '(a 100 b 200 c 300 d)))
+(display (if (eq? #f (min-above-min '() '(a 100 b 200 c 300 d))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: 100 \t Result: ")
 (display(min-above-min '(100) '()))
+(display (if (eq? 100 (min-above-min '(100) '())) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: 100 \t Result: ")
 (display(min-above-min '(a 200 b 100 c 300 d) '()))
+(display (if (eq? 100 (min-above-min '(a 200 b 100 c 300 d) '())) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: #f \t Result: ")
 (display(min-above-min '(a) '()))
+(display (if (eq? #f (min-above-min '(a) '())) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: #f \t Result: ")
 (display(min-above-min '(a) '(a 200 b 300 c 100 d)))
+(display (if (eq? #f (min-above-min '(a) '(a 200 b 300 c 100 d))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: #f \t Result: ")
 (display(min-above-min '(a b c) '(a 200 b 300 c 100 d)))
+(display (if (eq? #f (min-above-min '(a b c) '(a 200 b 300 c 100 d))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: 200 \t Result: ")
 (display(min-above-min '(a 200) '(a 200 b 300 c 100 d)))
+(display (if (eq? 200 (min-above-min '(a 200) '(a 200 b 300 c 100 d))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: #f \t Result: ")
 (display(min-above-min '(a 100) '(a 200 b 300 c 100 d)))
+(display (if (eq? #f (min-above-min '(a 100) '(a 200 b 300 c 100 d))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: 200 \t Result: ")
 (display(min-above-min '(100 200 300) '(300 100 200)))
+(display (if (eq? 200 (min-above-min '(100 200 300) '(300 100 200))) "\tPASS" "\tFAIL"))
 (display "\n")
+
+(display "expected result: 200 \t Result: ")
 (display(min-above-min '(a 300 b 100 c 200 d) '(a 200 b 300 c 100 d)))
+(display (if (eq? 200 (min-above-min '(a 300 b 100 c 200 d) '(a 200 b 300 c 100 d))) "\tPASS" "\tFAIL"))
 (display "\n")
