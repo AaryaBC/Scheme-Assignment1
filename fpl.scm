@@ -181,3 +181,60 @@ conditions:
 (display (sum-up-numbers-general '(a 100 ((b ((200) c)) 300 d)) ))
 (display (if (= 600 (sum-up-numbers-general '(a 100 ((b ((200) c)) 300 d)) )) "\tPASS" "\tFAIL"))
 (display "\n\n\n")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;QUESTION 4
+
+;guile 2.0.11
+
+(define (extract-numbers list1)
+  (cond ( (null? list1) '() )
+        ( (number? (car list1)) (cons (car list1) (extract-numbers (cdr list1))) )
+        ( else (extract-numbers (cdr list1)) )
+  )
+)
+
+(define (get-min given-list)
+  (cond ( (null? (cdr given-list)) (car given-list) )
+        ( (< (car given-list) (get-min (cdr given-list))) (car given-list) )
+        ( (get-min (cdr given-list)) )
+  )
+)
+
+(define (get-min-2 list2 min1 min2)
+  (if (and (< min1 (car list2)) (< (car list2) min2)) (car(get-min-2 (cdr list2) min1 (car list2))))
+  (car(get-min-2 (cdr list2) min1 min2))
+)
+  
+  
+(define (min-above-min L1 L2)
+  (cond ((null? (extract-numbers L1)) #f)
+        ((null? (extract-numbers L2)) (get-min (extract-numbers L1)))
+        (get-min-2 (extract-numbers L1) (get-min (extract-numbers L2)) (car (extract-numbers L1)))
+  )
+)
+
+#|
+(display(min-above-min '() '(a 100 b 200 c 300 d)))
+(display "\n")
+(display(min-above-min '(100) '()))
+(display "\n")
+(display(min-above-min '(a 200 b 100 c 300 d) '()))
+(display "\n")
+(display(min-above-min '(a) '()))
+(display "\n")
+(display(min-above-min '(a) '(a 200 b 300 c 100 d)))
+(display "\n")
+(display(min-above-min '(a b c) '(a 200 b 300 c 100 d)))
+(display "\n")
+(display(min-above-min '(a 200) '(a 200 b 300 c 100 d)))
+(display "\n")
+(display(min-above-min '(a 100) '(a 200 b 300 c 100 d)))
+(display "\n")
+(display(min-above-min '(100 200 300) '(300 100 200)))
+(display "\n")
+(display(min-above-min '(a 300 b 100 c 200 d) '(a 200 b 300 c 100 d)))
+(display "\n")
+|#
+(display (get-min-2 '(100 200 300) 100 100))
